@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #ammo-container {
+            position: absolute;
+            bottom: 900px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-right: 4px solid #ff0000;
+            padding: 4px 14px;
+            border-radius: 1px;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: none; /* Hidden by default */
+        }
+        .count { font-size: 20px; font-weight: bold; }
+        .separator { color: #ff0000; margin: 0 5px; }
+    </style>
+</head>
+<body>
+    <div id="ammo-container">
+        <span id="clip" class="count">0</span>
+        <span class="separator">/</span>
+        <span id="total" class="count">0</span>
+    </div>
+
+    <script>
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            const container = document.getElementById('ammo-container');
+            
+            if (data.show) {
+                container.style.display = 'block';
+                document.getElementById('clip').innerText = data.clip;
+                document.getElementById('total').innerText = data.total;
+            } else {
+                container.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
