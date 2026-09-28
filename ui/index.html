@@ -4,7 +4,7 @@
     <style>
         #ammo-container {
             position: absolute;
-            bottom: 900px;
+            bottom: 995px;
             right: 10px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
@@ -20,25 +20,30 @@
     </style>
 </head>
 <body>
-    <div id="ammo-container">
-        <span id="clip" class="count">0</span>
-        <span class="separator">/</span>
-        <span id="total" class="count">0</span>
-    </div>
+<div id="ammo-container">
+    <span id="clip" class="count">0</span>
+    <span id="sep" class="separator">/</span>
+    <span id="total" class="count">0</span>
+</div>
 
-    <script>
-        window.addEventListener('message', function(event) {
-            const data = event.data;
-            const container = document.getElementById('ammo-container');
-            
-            if (data.show) {
-                container.style.display = 'block';
-                document.getElementById('clip').innerText = data.clip;
-                document.getElementById('total').innerText = data.total;
-            } else {
-                container.style.display = 'none';
-            }
-        });
-    </script>
-</body>
-</html>
+<script>
+    const container = document.getElementById('ammo-container');
+    const clip = document.getElementById('clip');
+    const sep = document.getElementById('sep');
+    const total = document.getElementById('total');
+
+    window.addEventListener('message', (event) => {
+        const data = event.data;
+
+        if (!data.show) {
+            container.style.display = 'none';
+            return;
+        }
+
+        container.style.display = 'block';
+        // throwables: show only the count, no clip or separator
+        clip.style.display = sep.style.display = data.throwable ? 'none' : '';
+        clip.innerText = data.clip;
+        total.innerText = data.total;
+    });
+</script>
